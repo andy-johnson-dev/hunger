@@ -5,7 +5,7 @@ const IngredientSchema = new mongoose.Schema({
     amount: Number,
     measurement: String,
     notes: String
-});
+}, {_id: false});
 
 const Ingredient = mongoose.model('Ingredient', IngredientSchema)
 
