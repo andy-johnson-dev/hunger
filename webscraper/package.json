@@ -1,0 +1,25 @@
+{
+  "name": "hunger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "andy.johnson",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.11",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "fetch": "^1.1.0",
+    "fs": "^0.0.1-security",
+    "jsonschema": "^1.4.1",
+    "mongodb": "^4.7.0",
+    "mongoose": "^6.4.2",
+    "nodemon": "^2.0.16",
+    "numeric-quantity": "^1.0.4",
+    "puppeteer": "^15.1.1"
+  }
+}
