@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index"
+    "start": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "express": "^4.18.1",
     "helmet": "^6.0.0",
     "mongodb": "^4.9.0",
+    "mongoose": "^6.5.3",
     "morgan": "^1.10.0"
   }
 }

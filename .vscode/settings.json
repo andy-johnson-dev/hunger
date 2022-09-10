@@ -1,0 +1,8 @@
+{
+    "volar.splitEditors.layout.right": [
+
+        "template",
+        "customBlocks"
+    ],
+    "editor.formatOnSave": true
+}

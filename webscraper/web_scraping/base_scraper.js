@@ -1,7 +1,7 @@
 const e = require("express")
 const puppeteer = require("puppeteer")
-const Recipe = require("./schemas/recipe_schema")
-const Ingredient = require("./schemas/ingredient_schema")
+const Recipe = require("../schemas/recipe_schema")
+const Ingredient = require('../ingredient_schema')
 const numericQuantity = require("numeric-quantity")
 const dbo = require("../db/conn")
 
