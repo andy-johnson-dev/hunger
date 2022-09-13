@@ -1,47 +1,46 @@
 <template>
-  <v-app id="inspire">
-    <v-app-bar app color="white" flat>
-      <v-avatar size="64">
-        <img src="../assets/images/fork_logo.png" alt="Test" />
-      </v-avatar>
-
-      <v-tabs centered class="ml-n9" color="grey darken-1">
-        <v-tab v-for="link in links" :key="link">
-          {{ link }}
-        </v-tab>
-      </v-tabs>
-    </v-app-bar>
-
-    <v-main class="grey lighten-3">
-      <v-container>
-        <v-row>
-          <v-col cols="12" sm="2">
-            <v-sheet rounded="lg" min-height="268">
-              <!--  -->
-            </v-sheet>
-          </v-col>
-
-          <v-col cols="12" sm="8">
-            <v-sheet min-height="70vh" rounded="lg">
-              <!--  -->
-            </v-sheet>
-          </v-col>
-
-          <v-col cols="12" sm="2">
-            <v-sheet rounded="lg" min-height="268">
-              <!--  -->
-            </v-sheet>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-main>
-  </v-app>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light center">
+    <div class="container-fluid">
+      <router-link class="navbar-brand" to="/">
+        <img src="../assets/images/fork_logo.png" width="50" height="50" />
+        Hunger
+      </router-link>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse center" id="navbarNavAltMarkup">
+        <div class="navbar-nav center">
+          <router-link class="nav-link" to="/recipes">Recipes</router-link>
+          <router-link class="nav-link" to="/shopping_lists"
+            >Shopping Lists</router-link
+          >
+          <router-link class="nav-link" to="/meal_plans"
+            >Meal Plans</router-link
+          >
+        </div>
+      </div>
+    </div>
+  </nav>
 </template>
-  
-  <script>
-export default {
-  data: () => ({
-    links: ["Recipes", "Ingredients", "Meal Plans", "Shopping Lists"],
-  }),
-};
+
+<script>
+export default {};
 </script>
+
+<style>
+.navbar-nav.center {
+  text-align: center;
+}
+.navbar-nav.center .navbar-inner .nav {
+  display: inline-block;
+  float: none;
+}
+</style>
