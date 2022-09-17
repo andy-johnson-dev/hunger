@@ -1,8 +1,12 @@
 {
     "volar.splitEditors.layout.right": [
-
         "template",
         "customBlocks"
     ],
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }
+    ]
 }
