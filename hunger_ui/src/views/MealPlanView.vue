@@ -1,5 +1,5 @@
 <template>
-  <h2>MEAL PLAN VIEW</h2>
+  <p>MEAL PLAN VIEW</p>
 </template>
 
 <script>

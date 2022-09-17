@@ -1,48 +1,38 @@
 <template>
-  <div class="buffer">
-    <n-grid cols="4" item-responsive responsive>
-      <n-grid-item class="buffer-left"><ListComp /></n-grid-item>
-      <n-grid-item class="buffer"
-        ><n-card><RecipeCarousel /></n-card
-      ></n-grid-item>
-      <n-grid-item class="buffer"
-        ><n-card embedded><RecipeCarousel /></n-card
-      ></n-grid-item>
-      <n-grid-item><ListComp /></n-grid-item>
-    </n-grid>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col cols="12" sm="2">
+        <v-sheet rounded="lg" min-height="268">
+          <SavedLists />
+        </v-sheet>
+      </v-col>
+
+      <v-col cols="12" sm="8">
+        <v-sheet min-height="80vh" rounded="lg">
+          <v-container>
+            <TableComp />
+          </v-container>
+        </v-sheet>
+      </v-col>
+
+      <v-col cols="12" sm="2">
+        <v-sheet rounded="lg" min-height="268">
+          <!--  -->
+        </v-sheet>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import RecipeCarousel from "@/components/RecipeCarousel.vue";
-import ListComp from "@/components/ListComp.vue";
-import { NGridItem, NGrid, NCard } from "naive-ui";
-
+import TableComp from "@/components/TableComp.vue";
+import SavedLists from "@/components/SavedLists.vue";
 export default {
-  components: {
-    RecipeCarousel,
-    ListComp,
-    NGrid,
-    NGridItem,
-    NCard,
-  },
+  data: () => ({}),
+  components: { TableComp, SavedLists },
 };
 </script>
 
-<style>
-.container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-}
-.item {
-  align-self: flex-start;
-}
-.buffer {
-  margin: 1em 2em 2em 0em;
-}
 
-.buffer-left {
-  margin: 0em 2em 2em 2em;
-}
+<style>
 </style>
