@@ -1,37 +1,60 @@
 require('dotenv').config({ path: __dirname + '../../../config.env' });
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieSession = require('cookie-session')
 const helmet = require('helmet');
-const morgan = require('morgan');
-const mongoose = require('mongoose')
+const { dbConnect } = require('./db/conn');
+const { cookie_secret } = require('./config/auth-config');
 
 const PORT = process.env.API_PORT;
-const dbo = require('./db/conn')
+var corsOptions = {
+    origin: "https://localhost:3001"
+}
 
 const app = express();
 
+
+// require('./routes/user-route')(app);
+// app.use(require('./routes/user-route'),)
+
+
 app.use(helmet());
-app.use(bodyParser.json());
-app.use(cors());
-app.use(morgan('combined'));
-app.use(require('./routes/recipes'));
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
+app.use(cookieSession({
+    name: "hunger-session",
+    keys: [cookie_secret],
+    maxAge: 15 * 60 * 1000,
+    httpOnly: true,
+}
+))
 
-app.use(function(err, _req, res, next) {
+dbConnect;
+
+app.use(function (err, _req, res, next) {
     console.error(err.stack);
-    res.status(500).send("Something broke, send help!");
+    res.status(500).send({ status: "ERROR", message: "Something broke, send help!" });
 })
 
-dbo.connectToServer(function(err) {
-    if (err) {
-        console.error(err);
-        process.exit();
-    }
-
-    app.listen(PORT, () => {
-        console.log('listening on port 3001');
-    });
+app.use(function (req, res, next) {
+    req.session.nowInMinutes = Math.floor(Date.now() / 60e3)
+    next()
 })
+
+//routes
+require('./routes/auth-route')(app);
+require('./routes/user-route')(app);
+
+app.listen(PORT, () => {
+    console.log('listening on port 3001');
+});
+
+
+
+
+
+
 
 

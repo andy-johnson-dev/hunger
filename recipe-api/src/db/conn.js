@@ -1,32 +1,46 @@
-const { MongoClient, ServerApiVersion } = require('mongodb')
-const connectionString = process.env.DB_URI 
+const { ServerApiVersion } = require('mongodb');
+const db = require('../schemas')
+const Role = db.role;
+const connectionString = process.env.DB_URI
 const connectionKey = process.env.DB_KEY
 
-console.log(connectionString)
 
-const client = new MongoClient(connectionString, {
+exports.dbConnect = db.mongoose.connect(connectionString, {
+    ssl: true,
     sslKey: connectionKey,
     sslCert: connectionKey,
-    serverApi: ServerApiVersion.v1
-})
+    serverApi: ServerApiVersion.v1,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log("Successfully connected to MongoDB beeyatch");
 
-let dbConnection;
+    initial();
+}).catch(err => {
+    console.error("Connection error", err)
+    process.exit();
+});
 
-module.exports = {
-    connectToServer: function(callback) {
-        client.connect(function (err, db) {
-            if (err || !db) {
-                return callback(err);
-            }
-        
-            dbConnection = db.db("hunger")
-            console.log("Successfully connected to MongoDB.")
+function initial() {
+    Role.estimatedDocumentCount((err, count) => {
+        if (!err && count === 0) {
+            new Role({
+                name: "user"
+            }).save(err => {
+                if (err) {
+                    console.log("error: ", err)
+                }
+                console.log("added 'user' to roles collection")
+            })
 
-            return callback();
-        });
-    },
-
-    getDb: function () {
-        return dbConnection;
-    }
-};
+            new Role({
+                name: "admin"
+            }).save(err => {
+                if (err) {
+                    console.log("error: ", err)
+                }
+                console.log("added 'admin' to roles collection")
+            })
+        }
+    })
+}
