@@ -34,6 +34,28 @@ exports.findRecipeByKeyword = (req, res) => {
     });
 };
 
+exports.findRecipeByPhrase = (req, res) => {
+    const agg = [{
+        "$search": {
+            "index": "default",
+            "phrase": {
+                "query": `${req.query.search}`,
+                "path": {
+                    "wildcard": "*"
+                }
+            }
+        }
+    }]
+    Recipes.aggregate(agg, (err, results) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+        res.send(results);
+        return;
+    });
+}
+
 exports.findRecipeByIngredients = (req, res) => {
     var searchParams = (req.query.search).split('~')
     var queryArray = []
@@ -112,8 +134,18 @@ exports.createRecipe = (req, res) => {
         time: req.body.time,
         notes: req.body.notes
     }, (err, doc) => {
+        if (err.name === "ValidationError") {
+            console.log(err)
+            let errors = {}
+            Object.keys(err.errors).forEach((key) => {
+                errors[key] = err.errors[key].message;
+            });
+            res.status(400).send({ message: errors });
+            return;
+        }
         if (err) {
             res.status(500).send({ message: "oops. . . something went wrong." });
+            console.log(err)
             return;
         }
         res.status(201).send();

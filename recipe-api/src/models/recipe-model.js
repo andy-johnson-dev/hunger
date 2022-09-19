@@ -5,7 +5,10 @@ const Ingredient = require('./ingredient-model');
 const Recipes = mongoose.model("Recipes",
 
     new mongoose.Schema({
-        name: String,
+        name: {
+            type: String,
+            required: [true, 'A recipe name is required!']
+        },
         url: String,
         photo: String,
         ingredients: [Ingredient.IngredientSchema],

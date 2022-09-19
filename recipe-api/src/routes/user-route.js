@@ -11,12 +11,6 @@ module.exports = function (app) {
     });
 
     app.get("/test/all", controller.allAccess);
-
     app.get("/test/user", [authJWT.verifyToken], controller.userBoard);
-
-    app.get(
-        "/test/admin",
-        [authJWT.verifyToken, authJWT.isAdmin],
-        controller.adminBoard
-    );
+    app.get("/test/admin", [authJWT.verifyToken, authJWT.isAdmin], controller.adminBoard);
 };
