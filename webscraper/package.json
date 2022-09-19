@@ -17,7 +17,7 @@
     "fs": "^0.0.1-security",
     "jsonschema": "^1.4.1",
     "mongodb": "^4.7.0",
-    "mongoose": "^6.4.2",
+    "mongoose": ">=6.4.2",
     "nodemon": "^2.0.16",
     "numeric-quantity": "^1.0.4",
     "puppeteer": "^15.1.1"
