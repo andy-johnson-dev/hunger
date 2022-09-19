@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
-const Ingredient = require('./ingredient_schema');
+const Ingredient = require('./ingredient-model');
 
 
 const Recipes = mongoose.model("Recipes",

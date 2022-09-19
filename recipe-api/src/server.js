@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieSession({
     name: "hunger-session",
-    keys: [cookie_secret],
+    secret: cookie_secret,
     maxAge: 15 * 60 * 1000,
     httpOnly: true,
 }
@@ -46,6 +46,7 @@ app.use(function (req, res, next) {
 //routes
 require('./routes/auth-route')(app);
 require('./routes/user-route')(app);
+require('./routes/recipe-route')(app);
 
 app.listen(PORT, () => {
     console.log('listening on port 3001');

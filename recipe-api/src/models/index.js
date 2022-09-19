@@ -7,8 +7,8 @@ db.mongoose = mongoose;
 
 db.user = require('./user-model')
 db.role = require('./role-model')
-db.recipes = require('./recipe_schema')
-db.ingredient = require('./ingredient_schema')
+db.recipes = require('./recipe-model')
+db.ingredient = require('./ingredient-model')
 
 db.ROLES = ["user", "admin"]
 

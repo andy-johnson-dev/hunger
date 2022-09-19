@@ -1,5 +1,5 @@
 const { ServerApiVersion } = require('mongodb');
-const db = require('../schemas')
+const db = require('../models')
 const Role = db.role;
 const connectionString = process.env.DB_URI
 const connectionKey = process.env.DB_KEY
@@ -13,7 +13,7 @@ exports.dbConnect = db.mongoose.connect(connectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
-    console.log("Successfully connected to MongoDB beeyatch");
+    console.log("Successfully connected to MongoDB");
 
     initial();
 }).catch(err => {

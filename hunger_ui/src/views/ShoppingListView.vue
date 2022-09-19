@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import TableComp from "@/components/TableComp.vue";
-import SavedLists from "@/components/SavedLists.vue";
+import TableComp from "../components/TableComp.vue";
+import SavedLists from "../components/SavedLists.vue";
 export default {
   data: () => ({}),
   components: { TableComp, SavedLists },
