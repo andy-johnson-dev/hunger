@@ -46,7 +46,7 @@
 export default {
   methods: {
     logout() {
-      this.$router.push("/login");
+      this.$router.replace("/login");
     },
   },
 };

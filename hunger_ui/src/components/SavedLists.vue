@@ -14,7 +14,7 @@
             class="list-item"
           >
             <template v-slot:prepend>
-              <v-icon color="secondary" :icon="item.icon"></v-icon>
+              <v-icon color="secondary" icon="mdi-basket"></v-icon>
             </template>
 
             <v-list-item-title
@@ -38,9 +38,9 @@
 export default {
   data: () => ({
     items: [
-      { text: "Real-Time", icon: "mdi-clock" },
-      { text: "Audience", icon: "mdi-account" },
-      { text: "Conversions", icon: "mdi-flag" },
+      { text: "January", icon: "mdi-basket" },
+      { text: "Febuary", icon: "mdi-basket" },
+      { text: "March", icon: "mdi-basket" },
     ],
   }),
 };

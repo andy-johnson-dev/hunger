@@ -1,13 +1,6 @@
 const { authJWT } = require('../middleware');
 const controller = require('../controllers/recipe-controller.js')
 
-
-
-// recipeRoutes.route('/recipes').get(async function (req, res) {
-//     const recipes = await Recipes.find({});
-//     res.send(recipes)
-// });
-
 module.exports = function (app) {
     app.use(function (req, res, next) {
         res.header(
