@@ -1,3 +1,5 @@
+const s3 = require('../middleware/s3Client')
+
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
 };
@@ -13,3 +15,7 @@ exports.adminBoard = (req, res) => {
 exports.moderatorBoard = (req, res) => {
     res.status(200).send("Moderator Content.");
 };
+
+exports.fetchUserPhoto = async (req, res) => {
+    return await s3.fetch(res, 'hunger-roulette', req.params.key)
+}

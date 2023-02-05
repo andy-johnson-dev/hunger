@@ -5,7 +5,7 @@ module.exports = function (app) {
     app.use(function (req, res, next) {
         res.header(
             "Access-Control-Allow-Headers",
-            "Origin, Content-Type, Accept"
+            "x-access-token, Origin, Content-Type, Accept"
         );
         next();
     });
@@ -21,5 +21,6 @@ module.exports = function (app) {
 
     app.post("/auth/signin", controller.signin);
     app.post('/auth/signout', controller.signout);
+    app.post("/api/auth/refreshtoken", controller.refreshToken);
 
 };

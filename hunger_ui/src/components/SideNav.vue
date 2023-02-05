@@ -1,7 +1,9 @@
 <template>
   <v-container fluid>
     <v-list>
-      <v-list-item title="Sandra" subtitle="sandra_a88@gmailcom"></v-list-item>
+      <v-list-item :title="name" :subtitle="email"
+        ><v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar
+      ></v-list-item>
     </v-list>
 
     <v-divider></v-divider>
@@ -30,7 +32,7 @@
       ></v-list-item>
     </v-list>
     <v-divider></v-divider>
-    <v-btn @click="logout">log out</v-btn>
+    <v-btn class="mt-2" @click="logout">log out</v-btn>
     <!-- <v-footer class="d-flex flex-row-reverse">
       <v-btn
         @click="logout"
@@ -44,8 +46,35 @@
 
 <script>
 export default {
+  data: () => ({
+    name: "",
+    email: "",
+    photo: null,
+  }),
+  computed: {
+    currentUser: {
+      get() {
+        return {
+          name: `${this.$store.state.auth.user.firstname} ${this.$store.state.auth.user.lastname}`,
+          email: `${this.$store.state.auth.user.email}`,
+          photo: `${this.$store.state.auth.user.photo}`,
+        };
+      },
+      set(newUser) {
+        this.name = newUser.name;
+        this.email = newUser.name;
+        this.photo = newUser.photo;
+      },
+    },
+  },
+  mounted() {
+    this.name = this.currentUser.name;
+    this.email = this.currentUser.email;
+    this.photo = this.currentUser.photo;
+  },
   methods: {
     logout() {
+      this.$store.dispatch("auth/logout");
       this.$router.replace("/login");
     },
   },

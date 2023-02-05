@@ -4,11 +4,12 @@ import LoginView from '@/views/LoginView'
 import MealPlanView from '@/views/MealPlanView.vue'
 import RecipeView from '@/views/RecipeView.vue'
 import ShoppingListView from '@/views/ShoppingListView.vue'
-// import { useAuthStore } from '../stores/users.store';
+import RegisterView from '@/views/RegisterView.vue'
+
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'home',
     component: HomeView,
     children: [
@@ -32,7 +33,14 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: LoginView,
+    children: [
+      {
+        path: '/register',
+        name: 'register',
+        component: RegisterView
+      },
+    ]
   }
 
 
@@ -40,20 +48,20 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  linkActiveClass: 'active',
   routes
 })
 
-// router.beforeEach(async (to) => {
-//   const publicPages = ['/login'];
-//   const authRequired = !publicPages.includes(to.path);
-//   const auth = useAuthStore();
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  const isLoggedIn = localStorage.getItem('user')
 
-//   if (authRequired && !auth.user) {
-//     auth.returnUrl = to.fullPath;
-//     return '/login';
-//   }
-// })
+  if (authRequired && !isLoggedIn) {
+    next('/login')
+  } else {
+    next();
+  }
+})
 
 
 export default router

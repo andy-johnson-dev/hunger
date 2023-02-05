@@ -4,12 +4,17 @@ const User = db.user;
 const Role = db.role;
 
 var jwt = require('jsonwebtoken')
-var bcrypt = require('bcryptjs')
+var bcrypt = require('bcryptjs');
+const RefreshToken = require('../models/refresh-token-model');
+const s3 = require("../middleware/s3Client");
+
 
 
 
 exports.signup = (req, res) => {
     const user = new User({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
         username: req.body.username,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 8),
@@ -39,7 +44,7 @@ exports.signup = (req, res) => {
                             return;
                         }
 
-                        res.send({ message: "User was registered successfully!" });
+                        res.send({ message: "User was registered successfully 1!" });
                     });
                 }
             );
@@ -56,8 +61,7 @@ exports.signup = (req, res) => {
                         res.status(500).send({ message: err });
                         return;
                     }
-
-                    res.send({ message: "User was registered successfully!" });
+                    this.signin(req, res)
                 });
             });
         }
@@ -69,7 +73,7 @@ exports.signin = (req, res) => {
         username: req.body.username,
     })
         .populate("roles", "-__v")
-        .exec((err, user) => {
+        .exec(async (err, user) => {
             if (err) {
                 res.status(500).send({ message: err });
                 return;
@@ -89,8 +93,10 @@ exports.signin = (req, res) => {
             }
 
             var token = jwt.sign({ id: user.id }, config.secret, {
-                expiresIn: 43200, // 12 hours
+                expiresIn: config.jwtExpiration, // 12 hours
             });
+
+            var refreshToken = await RefreshToken.createToken(user);
 
             var authorities = [];
 
@@ -98,22 +104,62 @@ exports.signin = (req, res) => {
                 authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
             }
 
-            req.session.token = token;
-
+            // req.session.token = token;
+            console.log(user)
             res.status(200).send({
                 id: user._id,
+                firstname: user.firstname,
+                lastname: user.lastname,
                 username: user.username,
                 email: user.email,
+                photo: user.photo,
                 roles: authorities,
+                accessToken: token,
+                refreshToken: refreshToken
             });
         });
 };
 
-exports.signout = async (req, res) => {
+exports.refreshToken = async (req, res) => {
+    const { refreshToken: requestToken } = req.body;
+
+    if (requestToken == null) {
+        return res.status(403).json({ message: "Refresh Token is required!" });
+    }
+
     try {
-        req.session = null;
-        return res.status(200).send({ message: "You've been signed out!" });
+        let refreshToken = await RefreshToken.findOne({ token: requestToken });
+
+        if (!refreshToken) {
+            res.status(403).json({ message: "Refresh token is not in database!" });
+            return;
+        }
+
+        if (RefreshToken.verifyExpiration(refreshToken)) {
+            RefreshToken.findByIdAndRemove(refreshToken._id, { useFindAndModify: false }).exec();
+
+            res.status(403).json({
+                message: "Refresh token was expired. Please make a new signin request",
+            });
+            return;
+        }
+
+        let newAccessToken = jwt.sign({ id: refreshToken.user._id }, config.secret, {
+            expiresIn: config.jwtExpiration,
+        });
+
+        return res.status(200).json({
+            accessToken: newAccessToken,
+            refreshToken: refreshToken.token,
+        });
     } catch (err) {
-        this.next(err);
+        return res.status(500).send({ message: err });
     }
 };
+
+
+exports.signout = async (req, res) => {
+    // try {
+    req.session = null;
+    res.send({ "message": "You've been successfully signed out." })
+}

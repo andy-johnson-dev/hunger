@@ -2,6 +2,14 @@ const mongoose = require('mongoose')
 
 const User = mongoose.model("User",
     new mongoose.Schema({
+        firstname: {
+            type: String,
+            required: true
+        },
+        lastname: {
+            type: String,
+            required: true
+        },
         username: {
             type: String,
             required: true
@@ -9,6 +17,9 @@ const User = mongoose.model("User",
         email: {
             type: String,
             require: true
+        },
+        photo: {
+            type: String,
         },
         password: {
             type: String,

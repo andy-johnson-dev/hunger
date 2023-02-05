@@ -38,7 +38,7 @@ export default {
     links: [
       {
         name: "Home",
-        uri: "/",
+        uri: "/home",
       },
       {
         name: "Recipes",
