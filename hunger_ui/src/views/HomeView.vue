@@ -49,6 +49,10 @@ export default {
         uri: "/shopping_lists",
       },
       {
+        name: "Test",
+        uri: "/test",
+      },
+      {
         name: "Meal Plans",
         uri: "/meal_plans",
       },

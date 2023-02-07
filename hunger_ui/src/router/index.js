@@ -5,6 +5,7 @@ import MealPlanView from '@/views/MealPlanView.vue'
 import RecipeView from '@/views/RecipeView.vue'
 import ShoppingListView from '@/views/ShoppingListView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import TestView from '@/views/TestView.vue'
 
 
 const routes = [
@@ -27,6 +28,11 @@ const routes = [
         path: '/meal_plans',
         name: 'meal_plans',
         component: MealPlanView
+      },
+      {
+        path: '/test',
+        name: 'test',
+        component: TestView
       }
     ]
   },

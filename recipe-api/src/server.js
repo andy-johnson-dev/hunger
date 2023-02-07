@@ -9,15 +9,15 @@ const { cookie_secret } = require('./config/auth-config');
 
 
 const PORT = process.env.API_PORT;
-var corsOptions = {
-    origin: "http://localhost:8081"
-}
+// var corsOptions = {
+//     origin: "http://localhost:8081"
+// }
 
 const app = express();
 
 // app.use(helmet());
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 

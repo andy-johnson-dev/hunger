@@ -1,8 +1,14 @@
 <template>
   <v-container fluid>
     <v-list>
-      <v-list-item :title="name" :subtitle="email"
-        ><v-avatar class="mb-4" color="grey-darken-1" size="64"></v-avatar
+      <!-- <v-list-item
+        ><v-avatar class="mb-4" color="grey-darken-1" size="42"></v-avatar
+      ></v-list-item> -->
+      <v-list-item
+        nav
+        prepend-avatar="https://cdn.vuetifyjs.com/images/john.jpg"
+        :title="name"
+        :subtitle="email"
       ></v-list-item>
     </v-list>
 
@@ -28,6 +34,13 @@
         class="text-secondary"
         prepend-icon="mdi-star"
         title="Saved"
+        value="starred"
+      ></v-list-item>
+      <v-list-item
+        to="/test"
+        class="text-secondary"
+        prepend-icon="mdi-star"
+        title="TEST"
         value="starred"
       ></v-list-item>
     </v-list>
